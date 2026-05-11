@@ -1,12 +1,16 @@
 import { ObjectId } from "mongodb";
 
 export interface Expense {
-    title: string,
-    amount: number
+    _id?: ObjectId,
+    description: string,
+    amount: number,
+    participatingMembers: Member[]
 }
 export interface Donation {
+    _id?: ObjectId,
     date: Date,
-    amount: number
+    amount: number,
+    memberId: ObjectId
 }
 
 export interface Member {

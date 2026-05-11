@@ -1,4 +1,4 @@
-import { membersCollection, groupCollection, getGroupByEmail } from "@/lib/dbFunctions";
+import {  getGroupByEmail } from "@/lib/dbFunctions";
 
 
 export function validateEmail(email: string): string[] {

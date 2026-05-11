@@ -6,6 +6,7 @@ import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
 import { redirect } from "next/navigation";
+import { Expense } from "@/types";
 
 export async function createMemberAction(
   prevState: any,
@@ -21,13 +22,13 @@ export async function createMemberAction(
     if (groupInfo) {
     const decoded = jwt.verify(groupInfo, process.env.JWT_SECRET!) as { id: string; email: string; name: string };;
     groupId = decoded.id;
-}
+    }
 
-  const errors: any = {};
+    const errors: any = {};
 
-  if (!name || name.trim().length < 2) {
-    errors.name = ["Naam moet minstens 2 karakters bevatten"];
-  }
+    if (!name || name.trim().length < 2) {
+      errors.name = ["Naam moet minstens 2 karakters bevatten"];
+    }
 
   if (!email || !email.includes("@")) {
     errors.email = ["Ongeldig emailadres"];
@@ -50,3 +51,4 @@ export async function createMemberAction(
 
   return { success: true };
 }
+
