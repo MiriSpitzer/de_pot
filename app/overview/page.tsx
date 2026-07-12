@@ -6,21 +6,14 @@ import { Member } from '@/types';
 import { getGroupMembers } from '@/lib/dbFunctions';
 import { ObjectId } from 'mongodb';
 import Link from 'next/link';
+import { getLoggedInGroup } from '@/utils/validation';
 
 
 const Overview = async() => {
 
-    const cookieStore = await cookies();
-    const cookie = cookieStore.get("jwt");
-    const groupInfo = cookie?.value;
-    let groupId;
-
-    if (groupInfo) {
-    const decoded = jwt.verify(groupInfo, process.env.JWT_SECRET!) as { id: string; email: string; name: string };;
-    groupId = decoded.id;
-    }
-
-    const groupMembers = await getGroupMembers(new ObjectId(groupId));
+    const group = await getLoggedInGroup();
+    if (group){
+    const groupMembers = await getGroupMembers(new ObjectId(group._id));
     const members = groupMembers;
 
     return (
@@ -42,6 +35,7 @@ const Overview = async() => {
             </div>
         </div>
     );
+}
 }
 
 export default Overview;

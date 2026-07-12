@@ -18,5 +18,5 @@ if (jwtCookie) {
     }
 
 export const config = {
-matcher: ["/member/add","/overview", "/expenses/add"],
+matcher: ["/member/add","/overview", "/expenses/add", "/"],
 }

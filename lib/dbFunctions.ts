@@ -1,12 +1,12 @@
 import clientPromise from "./mongodb";
 import { ObjectId } from "mongodb";
-import { Expense, Group, Member } from "@/types";
+import { Donation, Expense, Group, Member } from "@/types";
 import bcrypt from 'bcrypt';
 
 const client = await clientPromise;
 const db = await client.db("depot");
-export const groupCollection = db.collection("groups");
-export const membersCollection = db.collection("members");
+export const groupCollection = db.collection<Group>("groups");
+export const membersCollection = db.collection<Member>("members");
 export const expensesCollection = db.collection("expenses");
 
 export async function getMemberById(id : ObjectId){
@@ -29,9 +29,72 @@ export async function getGroupMembers(id: ObjectId){
     return members;
 }
 
+export async function updateGroupBalance(email: string, amount: number){
+    const updatedBalance = groupCollection.updateOne(
+        {email: email},
+        {
+            $inc: {
+                balance: amount
+            }
+        }
+    )
+    return updatedBalance;
+}
+
 export async function addMember(member : Member){
     const addedMember = await membersCollection.insertOne(member);
     return addedMember;
+}
+
+export async function addExpenseToMember(id: ObjectId, description: string, amount: number){
+    const updatedMember = membersCollection.updateOne(
+        {_id: id},
+        {
+            $inc: {
+                balance: -amount
+            },
+            $push: {
+                expenses: {
+                    description,
+                    amount
+                }
+            }
+        }
+    )
+    return updatedMember;
+}
+
+export async function addDonationToMember(date: string, amount: number, id: ObjectId){
+    const updatedMember = membersCollection.updateOne(
+        {_id: id},
+        {
+            $inc: {
+                balance: amount
+            },
+            $push: {
+                donations: {
+                    date: new Date(date),
+                    amount: amount,
+                    memberId: id
+                }
+            }
+        }
+    )
+    return updatedMember;
+}
+
+export async function updateMemberInfo(id: ObjectId, name: string, email: string){
+    const updatedMember = await membersCollection.updateOne(
+        {_id: id},
+        {
+            $set:{
+                name: name,
+                email: email
+            }
+
+        }
+    )
+    return updatedMember;
 }
 
 export async function deleteMember(member: Member){
@@ -47,3 +110,4 @@ export async function addGroup(group : Group) {
 export async function addExpense(expense: Expense){
     const addedExpense = await expensesCollection.insertOne(expense);
 }
+

@@ -1,4 +1,6 @@
 import {  getGroupByEmail } from "@/lib/dbFunctions";
+import { cookies } from "next/headers";
+import jwt from 'jsonwebtoken';
 
 
 export function validateEmail(email: string): string[] {
@@ -80,4 +82,30 @@ export function validateRegisterPassword(password: string): string[] {
     }
 
     return errors;
+}
+
+export async function getLoggedInGroup(){
+    const cookieStore = await cookies();
+    const token = cookieStore.get("jwt")?.value;
+
+    if (!token) {
+        return null;
+    }
+
+    try {
+        const decoded = jwt.verify(
+            token,
+            process.env.JWT_SECRET!
+        ) as {
+            id: string;
+            email: string;
+            name: string;
+        };
+
+        const group = await getGroupByEmail(decoded.email);
+        return group;
+    } catch {
+        cookieStore.delete("jwt");
+        return null;
+    }
 }

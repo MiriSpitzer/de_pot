@@ -78,7 +78,7 @@ export const login = async (prevState: LoginState, formData: FormData): Promise<
         },
             process.env.JWT_SECRET!,
         {
-            expiresIn: "1h"
+            expiresIn: "1w"
         }
     );
 
@@ -90,9 +90,10 @@ export const login = async (prevState: LoginState, formData: FormData): Promise<
         httpOnly: true,
         sameSite: "lax",
         secure: true,
+        maxAge: 7 * 24 * 60 * 60
     });
 
-    redirect("/overview");
+    redirect("/");
 
     return {
         success: true,
@@ -128,18 +129,19 @@ export const register = async (prevState: LoginState, formData: FormData): Promi
     const saltRounds = process.env.SALTROUNDS || 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    const newGroup : Group = {name, email: email.trim().toLowerCase(), password: hashedPassword};
+    const newGroup : Group = {name, email: email.trim().toLowerCase(), password: hashedPassword, balance: 0};
     const result = await addGroup(newGroup);
 
     const token = jwt.sign(
         {
             id: result.insertedId,
             email: newGroup.email,
-            name: newGroup.name
+            name: newGroup.name,
+            balance: newGroup.balance
         },
             process.env.JWT_SECRET!,
         {
-            expiresIn: "1h"
+            expiresIn: "1w"
         }
     );
 
@@ -172,4 +174,4 @@ export async function logout() {
     const cookieStore = await cookies();
     cookieStore.delete("jwt");
     redirect("/");
-  }
+}

@@ -47,6 +47,7 @@ export default async function RootLayout({
                 </li>
               )}
               <li><a href="/overview">Overzicht</a></li>
+              <li><a href="/expenses/add">Uitgave toevoegen</a></li>
             </ul>
           </nav>
         </header>

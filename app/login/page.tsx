@@ -3,6 +3,7 @@ import React from "react";
 import { useActionState } from "react";
 import { login } from "@/actions/authActions";
 import styles from "./login.module.css";
+import Link from "next/link";
 
 export default function Login() {
   const [state, loginAction, pending] = useActionState(login, {
@@ -77,6 +78,7 @@ export default function Login() {
               >
                 {pending ? "Inloggen..." : "Login"}
               </button>
+              <Link href="/register">Nog geen account? Registreer</Link>
 
             </form>
           </div>
