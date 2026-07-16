@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# De Pot
 
-## Getting Started
+This project was built as part of my journey as a beginner web developer and to strengthen my portfolio with a complete, real-world application. I wanted to create something practical and easy to understand: a simple app for managing a shared pot of money, tracking donations, and keeping expenses organized.
 
-First, run the development server:
+## Why I built this site
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+I built this site to practice and showcase the skills I am learning as a beginner developer. The project helped me work with:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- React and Next.js
+- TypeScript
+- MongoDB for storing data
+- User authentication and forms
+- CRUD operations for members, donations, and expenses
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+For me, this is more than just a project. It shows that I can turn an idea into a working web application and that I am continuing to grow as a developer.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## How it works
 
-## Learn More
+The app allows users to:
 
-To learn more about Next.js, take a look at the following resources:
+- Register and log in
+- Create and manage members
+- Add donations to the shared pot
+- Record expenses
+- View an overview of the current balance and activity
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The frontend is built with Next.js, and the data is stored in MongoDB so the information remains available between sessions.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Live app
 
-## Deploy on Vercel
+You can view the online version here:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+https://de-pot.vercel.app/
