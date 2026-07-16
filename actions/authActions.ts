@@ -155,7 +155,7 @@ export const register = async (prevState: LoginState, formData: FormData): Promi
         secure: true,
     });
 
-    redirect("/overview");
+    redirect("/");
 
     return {
         success: true,
