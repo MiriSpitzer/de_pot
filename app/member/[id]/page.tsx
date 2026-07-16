@@ -3,7 +3,6 @@ import { ObjectId } from 'mongodb';
 import AddDonationForm from './addDonationForm';
 import MemberInfo from './memberInfo';
 import styles from './member.module.css';
-import { sendLowBalaceEmail } from '@/lib/mails';
 
 const Page = async({params} : {params : Promise<{id: string}>}) => {
 
