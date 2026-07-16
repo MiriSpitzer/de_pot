@@ -7,7 +7,7 @@ import jwt from 'jsonwebtoken';
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { getLoggedInGroup } from "@/lib/validation";
-import { sendLowBalaceEmail } from "@/lib/mails";
+
 
 export async function addExpenseAction(
   prevState: any,
@@ -44,13 +44,7 @@ export async function addExpenseAction(
     }
   }
 
-
   for(const member of participatingMembers){
-    const newBalance = member.balance - individualExpense;
-    if(newBalance < 5 ){
-      await sendLowBalaceEmail(member.email, member.name, newBalance );
-      console.log("arrived!");
-    }
     await addExpenseToMember(member._id!, description, individualExpense);
   }
 
