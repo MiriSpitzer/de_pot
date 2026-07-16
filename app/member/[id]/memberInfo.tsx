@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { deleteMemberAction, updateMemberInfoAction } from "@/actions/memberActions";
 import { Member } from "@/types";
+import styles from './member.module.css';
 
 export default function MemberInfo({ member }: { member: Member }) {
     const [editing, setEditing] = useState(false);
@@ -24,36 +25,38 @@ export default function MemberInfo({ member }: { member: Member }) {
     }
 
     return (
-        <div>
+        <div className={styles.memberHeader}>
             {editing ? (
-                <div>
+                <div className={styles.editForm}>
                     <input
                         value={name}
                         onChange={(e) => setName(e.target.value)}
+                        className={styles.inputWide}
                     />
 
                     <input
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        className={styles.inputWide}
                     />
 
-                    <button onClick={handleSave}>
+                    <button onClick={handleSave} className={styles.submitBtn}>
                         Opslaan
                     </button>
                 </div>
             ) : (
                 <div>
-                    <h1>{name}</h1>
+                    <h1 className={styles.memberName}>{name}</h1>
                     <p>{email}</p>
                 </div>
             )}
 
-            <div>
-                <button onClick={() => setEditing(true)}>
+            <div className={styles.controls}>
+                <button onClick={() => setEditing(true)} className={styles.submitBtn}>
                     ✏️
                 </button>
 
-                <button onClick={handleDelete}>
+                <button onClick={handleDelete} className={styles.submitBtn}>
                     🗑️
                 </button>
             </div>

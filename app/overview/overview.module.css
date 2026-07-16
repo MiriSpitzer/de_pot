@@ -1,0 +1,110 @@
+/* Overview page styles - desktop only */
+.page {
+  margin: 0 8%;
+  padding: 2.5rem 0;
+}
+
+
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 200px);
+  gap: 2rem;
+  align-items: start;
+  justify-content: center;
+}
+
+.cardLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.cardLink:hover {
+  text-decoration: none;
+}
+
+.card {
+  width: 200px;
+  box-sizing: border-box;
+  background: #ffffff;
+  border-radius: 6px;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid #e6efef;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.04);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 260px;
+  transition: box-shadow 180ms ease, transform 180ms ease;
+}
+
+/* Hover the entire link/card: elevate card */
+.cardLink:hover .card {
+  transform: translateY(-8px);
+  box-shadow: 0 18px 30px rgba(0,0,0,0.12);
+}
+
+.avatar {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: #bfd8d8;
+  border: 1px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 -4px 0 rgba(0,0,0,0.03);
+  margin-bottom: 0.75rem;
+}
+
+.avatarText {
+  text-align: center;
+  color: #123233;
+  font-weight: 600;
+}
+
+.cardContent {
+  width: 100%;
+  margin-top: auto;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+}
+
+.label {
+  color: #0f3333;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.value {
+  color: #243b3b;
+  font-size: 0.95rem;
+}
+
+.addCard {
+  justify-content: center;
+  cursor: pointer;
+}
+
+.addCircle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 2px solid #cfe6e6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 44px;
+  color: #7a8a8a;
+}
+
+.addText {
+  margin-top: 1rem;
+  color: #2f4b4b;
+}

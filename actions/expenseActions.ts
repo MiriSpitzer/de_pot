@@ -6,17 +6,36 @@ import { ObjectId } from "mongodb";
 import jwt from 'jsonwebtoken';
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { getLoggedInGroup } from "@/utils/validation";
+import { getLoggedInGroup } from "@/lib/validation";
+import { sendLowBalaceEmail } from "@/lib/mails";
 
 export async function addExpenseAction(
   prevState: any,
   formData: FormData
 ){
-  const description = formData.get("description") as string;
+  const description = (formData.get("description") as string) ?? "";
   const amount : number = Number(formData.get("amount"));
   const participatingMembersId = formData.getAll("participatingMembers") as string[];
   const individualExpense: number = Number(formData.get("individualExpense"));
-  
+
+  const errors: any = {};
+
+  if(!description || description.trim() === ""){
+    errors.description = ["Geef een passende beschrijving!"];
+  }
+
+  if(!amount || Number(amount) <= 0){
+    errors.amount = ["Het uitgegeven bedrag kan niet gelijk zijn aan nul!"];
+  }
+
+  if(!participatingMembersId || participatingMembersId.length === 0){
+    errors.participatingMembers = ["Er moet minstens één lid meedoen aan de uitgave!"];
+  }
+
+  if(Object.keys(errors).length > 0){
+    return {success: false, errors};
+  }
+
   let participatingMembers : Member[] = [];
   for(let id of participatingMembersId){
     const member = await getMemberById(new ObjectId(id));
@@ -25,41 +44,28 @@ export async function addExpenseAction(
     }
   }
 
-  for(var member of participatingMembers){
-    await addExpenseToMember(member._id!, description, individualExpense)
+
+  for(const member of participatingMembers){
+    const newBalance = member.balance - individualExpense;
+    if(newBalance < 5 ){
+      await sendLowBalaceEmail(member.email, member.name, newBalance );
+      console.log("arrived!");
+    }
+    await addExpenseToMember(member._id!, description, individualExpense);
   }
 
-  
   if(participatingMembers.length * individualExpense < amount){
     const correction: number = amount - participatingMembers.length * individualExpense;
     const r = Math.floor(Math.random() * participatingMembers.length);
-    await addExpenseToMember(participatingMembers[r]._id!, "correctie", r)
+    await addExpenseToMember(participatingMembers[r]._id!, "correctie", correction);
   }
 
   const group = await getLoggedInGroup();
   if (group) {
-    const fixBalance = await updateGroupBalance(group.email, -amount);
+    await updateGroupBalance(group.email, -amount);
   }
 
-  const errors: any = {};
-
-  if(description === ""){
-    errors.description = ["Geef een passende beschrijving!"]
-  }
-
-  if(Number(amount) <= 0){
-    errors.amount = ["Het uitgegeven bedrag kan niet gelijk zijn aan nul!"]
-  }
-
-  if(participatingMembersId.length === 0){
-    errors.participatingMembers = ["Er moet minstens één lid meedoen aan de uitgave!"]
-  }
-
-  if(Object.keys(errors).length > 0){
-    return {success: false, errors};
-  }
-  
   await addExpense({description, amount, participatingMembers});
   redirect("/");
-  return {success: true, errors: {}}
+  return {success: true, errors: {}};
 }

@@ -1,0 +1,46 @@
+.pageWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 56px 16px;
+}
+
+/* Heading style matching design */
+.pageWrapper h1 {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 700;
+  color: #1f3840;
+  margin: 0 0 28px 0;
+  position: relative;
+  padding-bottom: 8px; /* minimal space so stripes sit close to text */
+}
+
+/* two thin green stripes under the heading */
+.pageWrapper h1::before,
+.pageWrapper h1::after {
+  content: "";
+  position: absolute;
+  background: #B3CFD0;
+  border-radius: 2px;
+  height: 1px; /* thin lines */
+  width: calc(100% + 12px); /* slightly longer than the text in pixels */
+  left: 50%;
+  transform: translateX(-50%); /* centered under the text */
+}
+
+.pageWrapper h1::before {
+  bottom: 6px; /* very close to text */
+}
+
+.pageWrapper h1::after {
+  bottom: 2px; /* slightly below the first stripe */
+}
+
+/* small responsive tweak */
+@media (max-width: 600px) {
+  .pageWrapper {
+    padding: 28px 12px;
+  }
+}

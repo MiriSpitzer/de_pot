@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 import { createMemberAction } from "@/actions/memberActions";
-import styles from "./add.module.css";
+import styles from '../../expenses/add/newExpenseCard.module.css';
 
 export default function AddMemberForm() {
   const [state, formAction, pending] = useActionState(createMemberAction, {
@@ -12,27 +12,24 @@ export default function AddMemberForm() {
 
   return (
     <form action={formAction}>
-      <div className={styles.formGroup}>
-        <label>Naam</label>
-        <input name="name" required />
-        {state?.errors?.name?.map((err: string, i: number) => (
-          <p key={i} className={styles.error}>
-            {err}
-          </p>
-        ))}
+      {state?.errors && Object.keys(state.errors).length > 0 && (
+        <div className={styles.errors}>
+          {state.errors.name && <div>{state.errors.name.join(', ')}</div>}
+          {state.errors.email && <div>{state.errors.email.join(', ')}</div>}
+        </div>
+      )}
+
+      <div className={styles.fieldRow}>
+        <label className={styles.label}>Naam</label>
+        <input className={styles.input} name="name" required />
       </div>
 
-      <div className={styles.formGroup}>
-        <label>Email</label>
-        <input name="email" type="email" required />
-        {state?.errors?.email?.map((err: string, i: number) => (
-          <p key={i} className={styles.error}>
-            {err}
-          </p>
-        ))}
+      <div className={styles.fieldRow}>
+        <label className={styles.label}>Email</label>
+        <input className={styles.input} name="email" type="email" required />
       </div>
 
-      <button disabled={pending} className={styles.button}>
+      <button disabled={pending} className={styles.submit}>
         {pending ? "Toevoegen..." : "Toevoegen"}
       </button>
     </form>

@@ -4,35 +4,47 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 60px;
+  padding-top: 56px;
   background-color: #ffff;
   font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Titel */
 .title {
-  font-weight: 500;
-  margin-bottom: 30px;
+  text-align: center;
+  font-size: 32px;
+  font-weight: 700;
+  color: #1f3840;
+  margin: 0 0 28px 0;
   position: relative;
+  padding-bottom: 8px;
 }
 
+/* two thin green stripes under the heading */
+.title::before,
 .title::after {
   content: "";
-  display: block;
-  width: 120px;
-  height: 2px;
-  background-color: #b6d0d2;
-  margin: 8px auto 0;
+  position: absolute;
+  background: #B3CFD0;
+  border-radius: 2px;
+  height: 1px;
+  width: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
 }
+
+.title::before { bottom: 6px; }
+.title::after { bottom: 2px; }
 
 /* Form kaart */
 .card {
   background: white;
-  width: 420px;
-  min-height: 450px;
-  padding: 40px 50px;
-  border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  width: 560px;
+  min-height: 420px;
+  padding: 32px;
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+  border: 1px solid rgba(93,182,176,0.12);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -40,28 +52,28 @@
 
 /* Form groep */
 .formGroup {
-  margin-bottom: 30px;
+  margin-bottom: 18px;
 }
 
 .formGroup label {
   display: block;
   font-size: 14px;
   margin-bottom: 8px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .formGroup input {
   width: 100%;
   border: none;
-  border-bottom: 1px solid #aaa;
-  padding: 8px 0;
+  border-bottom: 1px solid rgba(34,50,50,0.15);
+  padding: 8px 6px;
   font-size: 14px;
   outline: none;
   background: transparent;
 }
 
 .formGroup input:focus {
-  border-bottom: 1px solid #5fa8ad;
+  border-bottom: 1px solid #B3CFD0;
 }
 
 /* Error tekst */
@@ -72,20 +84,23 @@
 }
 
 /* Knop */
+
 .button {
-  align-self: center;
-  padding: 8px 30px;
-  border-radius: 4px;
-  border: 1px solid #5fa8ad;
-  background: white;
-  color: #333;
+  margin: 18px auto 0;
+  display: block;
+  padding: 10px 24px;
+  border-radius: 6px;
+  background: transparent;
+  border: 1px solid rgba(93,182,176,0.4);
+  color: #0b2b2b;
   cursor: pointer;
-  transition: all 0.2s ease;
 }
 
 .button:hover {
-  background: #5fa8ad;
-  color: white;
+  background: #B3CFD0;
+  color: #ffffff;
+  border-color: #B3CFD0;
+  box-shadow: 0 6px 12px rgba(179,207,208,0.18);
 }
 
 .button:disabled {

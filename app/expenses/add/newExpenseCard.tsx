@@ -3,6 +3,7 @@ import { addExpenseAction } from '@/actions/expenseActions';
 import { Member } from '@/types';
 import React, { useEffect } from 'react';
 import { useState, useActionState } from 'react';
+import styles from './newExpenseCard.module.css'
 
 
 const ExpenseCard = ({members}: {members: Member[]}) => {
@@ -31,35 +32,60 @@ const ExpenseCard = ({members}: {members: Member[]}) => {
     }
 
     return (                
-        <div>
-            <form action={formAction}>
-            <div>
-                <p>Bijdrage per lid:</p>
-                <p>{individualExpense.toFixed(2)}</p>
-            </div>
-            <div>
-                <label htmlFor="amount">Bedrag:</label>
-                <input type="number" id='amount' name='amount' step='0.01' onChange={(e) => {
-                        const value = Number(e.target.value);
-                        setAmount(Math.round(value * 100) / 100);
-                    }}
-                />
-            </div>
-            <div>
-                <label htmlFor="description">Beschrijving:</label><br />
-                <input type="text" id='description' name='description' onChange={(e) => setDescripton(e.target.value)}/><br />
-            </div>
+        <div className={styles.wrapper}>
+            <form className={styles.card} action={formAction}>
+            {state?.errors && Object.keys(state.errors).length > 0 && (
+                <div className={styles.errors}>
+                    {state.errors.description && <div>{state.errors.description.join(', ')}</div>}
+                    {state.errors.amount && <div>{state.errors.amount.join(', ')}</div>}
+                    {state.errors.participatingMembers && <div>{state.errors.participatingMembers.join(', ')}</div>}
+                </div>
+            )}
+                        <div className={styles.totalRow}>
+                                <div className={styles.totalBox}>
+                                    <p className={styles.totalLabel}>Bijdrage per lid:</p>
+                                    <p className={styles.totalValue}>€ {individualExpense.toFixed(2)}</p>
+                                </div>
+                        </div>
+                        <div className={styles.fieldRow}>
+                                <label className={styles.label} htmlFor="amount">Bedrag (in eur):</label>
+                                <input
+                                    className={styles.input}
+                                    type="text"
+                                    inputMode="decimal"
+                                    id="amount"
+                                    name="amount"
+                                    placeholder="0,00"
+                                    onChange={(e) => {
+                                        const raw = e.target.value || '';
+                                        const normalized = raw.replace(/,/g, '.').replace(/[^0-9.]/g, '');
+                                        const parsed = parseFloat(normalized);
+                                        const value = Number.isFinite(parsed) ? Math.round(parsed * 100) / 100 : 0;
+                                        setAmount(value);
+                                    }}
+                                />
+                        </div>
+                <div className={styles.fieldRow}>
+                    <label className={styles.label} htmlFor="description">Beschrijving:</label>
+                    <input className={styles.input} type="text" id='description' name='description' value={description} required onChange={(e) => setDescripton(e.target.value)}/>
+                </div>
             {participatingMembers.map(member => (
                 <input key={member.name} type="hidden" name="participatingMembers" value={member._id!.toString()} />
             ))}
             <input type="hidden" name="individualExpense" value={individualExpense.toFixed(2)} />
-            <div>
-                <p>Deelnemende leden:</p>
-                {members.map((member) => (
-                    <div key={member.name} onClick={() => addParticipatingMember(member)}>{member.name}</div>
-                ))}
+            <div className={styles.membersSection}>
+                <p className={styles.membersLabel}>Participerende leden:</p>
+                <div className={styles.membersGrid}>
+                {members.map((member) => {
+                    const isActive = participatingMembers.some(m => m.name === member.name);
+                    const className = isActive ? `${styles.member} ${styles.active}` : styles.member;
+                    return (
+                        <div key={member.name} className={className} onClick={() => addParticipatingMember(member)}>{member.name}</div>
+                    )
+                })}
+                </div>
             </div>
-            <button type='submit'>Toevoegen</button>
+            <button className={styles.submit} type='submit'>Toevoegen</button>
             </form>
         </div>
     );

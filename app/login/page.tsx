@@ -78,7 +78,7 @@ export default function Login() {
               >
                 {pending ? "Inloggen..." : "Login"}
               </button>
-              <Link href="/register">Nog geen account? Registreer</Link>
+              <Link href="/register" className={styles.registerLink}>Nog geen account? Registreer</Link>
 
             </form>
           </div>

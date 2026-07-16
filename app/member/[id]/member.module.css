@@ -1,0 +1,164 @@
+/* Member detail page styles */
+.memberPage {
+  margin: 2rem 6%;
+}
+
+.memberHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.memberHeader {
+  width: 760px;
+  margin: 0 auto 1rem auto;
+}
+
+.memberName {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #123233;
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+}
+
+.contentCenter {
+  width: 760px;
+  max-width: 100%;
+  margin: 0 auto 1.5rem auto;
+}
+
+.stats {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  width: 760px;
+  max-width: 100%;
+}
+
+.statCard {
+  background: #B3CFD0;
+  width: calc((100% - 3rem) / 3);
+  height: 100px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.04);
+}
+
+.statLabel {
+  font-weight: 700;
+  color: #0f3333;
+}
+
+.statValue {
+  font-size: 1.25rem;
+  margin-top: 6px;
+}
+
+.contentGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.expensesBox, .rightColumnBox {
+  border: 1px solid #d6e2e3;
+  border-radius: 6px;
+  padding: 1rem;
+  background: white;
+  min-height: 260px;
+}
+
+.expensesList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.expenseItem {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.02);
+}
+
+.formRow {
+  display: flex;
+  gap: 6px;
+  align-items: flex-end;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  overflow-x: visible;
+}
+
+.inputSmall {
+  width: 90px;
+  padding: 4px 6px;
+  border: 1px solid #cfdede;
+  border-radius: 4px;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: auto;
+}
+
+.inputWide {
+  width: 360px;
+  max-width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #cfdede;
+  border-radius: 4px;
+}
+
+.editForm {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.submitBtn {
+  padding: 8px 12px;
+  background: transparent;
+  border: 1px solid #B3CFD0;
+  color: #123233;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.submitBtn:hover {
+  background: #B3CFD0;
+  color: #fff;
+  border-color: #B3CFD0;
+}
+
+.expensesBox h3,
+.rightColumnBox h4 {
+  color: #B3CFD0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+}
+
+.historyList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.historyItem {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+}

@@ -1,0 +1,151 @@
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  width: 560px;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 32px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+  border: 1px solid rgba(93,182,176,0.12);
+  position: relative;
+}
+
+.errors {
+  color: #b00020;
+  margin-bottom: 12px;
+}
+
+.totalRow {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+.totalLabel {
+  display: inline-block;
+  font-weight: 600;
+  color: #223;
+  margin-right: 12px;
+  align-self: center;
+}
+
+.totalValue {
+  background: transparent;
+  color: #ffffff;
+  padding: 0;
+  border-radius: 0;
+  font-weight: 700;
+}
+
+.totalBox {
+  background: #B3CFD0;
+  padding: 8px 18px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: inherit;
+}
+
+.totalBox .totalLabel {
+  color: #223;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.totalBox .totalValue {
+  color: #223;
+  background: transparent;
+  padding: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.fieldRow {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.label {
+  font-weight: 600;
+  color: #223;
+}
+
+.input {
+  border: 0;
+  border-bottom: 1px solid rgba(34,50,50,0.15);
+  padding: 8px 6px;
+  outline: none;
+}
+
+.membersSection {
+  margin-top: 12px;
+}
+
+.membersLabel {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.membersGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.member {
+  border: 2px solid #B3CFD0;
+  padding: 10px 14px;
+  border-radius: 999px;
+  text-align: center;
+  cursor: pointer;
+  background: #ffffff;
+  color: #0b2b2b;
+  user-select: none;
+}
+
+.member:hover {
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+.active {
+  background: #B3CFD0;
+  color: #fff;
+  border-color: #B3CFD0;
+}
+
+.submit {
+  margin: 18px auto 0;
+  display: block;
+  padding: 10px 24px;
+  border-radius: 6px;
+  background: transparent;
+  border: 1px solid rgba(93,182,176,0.4);
+  color: #0b2b2b;
+  cursor: pointer;
+}
+
+.submit:hover {
+  background: #B3CFD0;
+  color: #ffffff;
+  border-color: #B3CFD0;
+  box-shadow: 0 6px 12px rgba(179,207,208,0.18);
+}
+
+@media (max-width: 600px) {
+  .card {
+    width: 100%;
+    padding: 20px;
+  }
+  .membersGrid {
+    grid-template-columns: 1fr;
+  }
+}

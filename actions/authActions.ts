@@ -5,7 +5,7 @@ import bcrypt from "bcrypt";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { addGroup, getGroupByEmail } from "@/lib/dbFunctions";
-import { validateEmail, validatePassword, validateRegisterEmail, validateRegisterPassword } from "@/utils/validation";
+import { validateEmail, validatePassword, validateRegisterEmail, validateRegisterPassword } from "@/lib/validation";
 import { Group } from "@/types";
 
 interface LoginState {

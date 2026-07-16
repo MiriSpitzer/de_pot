@@ -35,7 +35,9 @@ export default async function RootLayout({
           <a href="/" className={styles.logo}><img src="/logo_full-removebg.png" alt="DE POT" /></a>
           <nav className={styles.nav}>
             <ul>
-               {!jwt ? (
+              <li><a href="/overview">Overzicht</a></li>
+              <li><a href="/expenses/add">Uitgave toevoegen</a></li>
+              {!jwt ? (
                 <li>
                   <a href="/login">Inloggen</a>
                 </li>
@@ -46,8 +48,6 @@ export default async function RootLayout({
                   </form>
                 </li>
               )}
-              <li><a href="/overview">Overzicht</a></li>
-              <li><a href="/expenses/add">Uitgave toevoegen</a></li>
             </ul>
           </nav>
         </header>

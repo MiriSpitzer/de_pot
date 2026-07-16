@@ -2,6 +2,8 @@ import { getMemberById } from '@/lib/dbFunctions';
 import { ObjectId } from 'mongodb';
 import AddDonationForm from './addDonationForm';
 import MemberInfo from './memberInfo';
+import styles from './member.module.css';
+import { sendLowBalaceEmail } from '@/lib/mails';
 
 const Page = async({params} : {params : Promise<{id: string}>}) => {
 
@@ -13,55 +15,59 @@ const Page = async({params} : {params : Promise<{id: string}>}) => {
 
     if(member){
         return (
-        <div>
-            <MemberInfo member={member}/>
+        <div className={styles.memberPage}>
+            <MemberInfo member={member} />
+            <div className={styles.contentCenter}>
+                <div className={styles.stats}>
+                <div className={styles.statCard}>
+                    <div className={styles.statLabel}>Saldo</div>
+                    <div className={styles.statValue}>{Number(member.balance || 0).toLocaleString('nl-NL', {style: 'currency', currency: 'EUR'})}</div>
+                </div>
 
-            <div>
-                <div>
-                    <p>Saldo</p>
-                    <p>{member.balance}</p>
+                <div className={styles.statCard}>
+                    <div className={styles.statLabel}>Uitgegeven</div>
+                    <div className={styles.statValue}>{totalExpenses.toLocaleString('nl-NL', {style: 'currency', currency: 'EUR'})}</div>
                 </div>
-                <div>
-                    <p>Uitgegeven</p>
-                    <p>{totalExpenses}</p>
-                </div>
-                <div>
-                    <p>Aan de pot gegeven</p>
-                    <p>{totalDonations}</p>
-                </div>
-            </div>
 
-            <div>
-                <p>Meegedaan</p>
-                <div >
-                {member.expenses.map((expense) =>  
-                    <div key={expense._id?.toString()}>
-                        <p>{expense.description}</p>
-                        <p>{expense.amount}</p>
-                    </div>
-                )}
+                <div className={styles.statCard}>
+                    <div className={styles.statLabel}>Aan de pot gegeven</div>
+                    <div className={styles.statValue}>{totalDonations.toLocaleString('nl-NL', {style: 'currency', currency: 'EUR'})}</div>
                 </div>
-            </div>
-
-            <div>
-                <div>
-                    <p>Donatie toevoegen</p>
-
                 </div>
-                    <AddDonationForm member={member} />
-                <div>
-                    <p>Eerdere donaties</p>
-                    <div>
-                    {member.donations.map((donation) =>  
-                        <div key={donation._id?.toString()}>
-                            <p>{new Date(donation.date).toLocaleDateString("nl-BE")}</p>
-                            <p>{donation.amount}</p>
-                        </div>
-                    )}
-                    </div>
-                </div>
-            </div>
             
+                <div className={styles.contentGrid}>
+                <div className={styles.expensesBox}>
+                    <h3>Meegedaan</h3>
+                    <ul className={styles.expensesList}>
+                    {member.expenses.map((expense) =>  
+                        <li key={expense._id?.toString()} className={styles.expenseItem}>
+                            <span>{expense.description}</span>
+                            <span>{Number(expense.amount).toLocaleString('nl-NL', {style: 'currency', currency: 'EUR'})}</span>
+                        </li>
+                    )}
+                    </ul>
+                </div>
+
+                <div className={styles.rightColumnBox}>
+                    <div style={{marginBottom: '12px'}}>
+                        <h4>Donatie toevoegen</h4>
+                        <AddDonationForm member={member}/>
+                    </div>
+
+                    <div style={{marginTop: '18px'}}>
+                        <h4>Eerdere donaties</h4>
+                        <ul className={styles.historyList}>
+                        {member.donations.map((donation) =>  
+                            <li key={donation._id?.toString()} className={styles.historyItem}>
+                                <span>{new Date(donation.date).toLocaleDateString('nl-BE')}</span>
+                                <span>{Number(donation.amount).toLocaleString('nl-NL', {style: 'currency', currency: 'EUR'})}</span>
+                            </li>
+                        )}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            </div>
         </div>
         )
     }

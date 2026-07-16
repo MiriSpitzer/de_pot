@@ -5,7 +5,8 @@ import { getGroupMembers } from '@/lib/dbFunctions';
 import { ObjectId } from 'mongodb';
 import  jwt  from 'jsonwebtoken';
 import  ExpenseCard  from './newExpenseCard'
-import { getLoggedInGroup } from '@/utils/validation';
+import styles from './page.module.css'
+import { getLoggedInGroup } from '@/lib/validation';
 
 const addExpense = async() => {
 
@@ -15,7 +16,8 @@ const addExpense = async() => {
     const members: Member[] = groupMembers;
 
     return (
-        <div>
+        <div className={styles.pageWrapper}>
+            <h1>Uitgave toevoegen</h1>
             <ExpenseCard members={members} />
         </div>
     );

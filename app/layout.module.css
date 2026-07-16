@@ -6,14 +6,19 @@
   padding: 0;
 }
 
+:root {
+  --underline-width: 110%;
+}
+
 .header {
   background-color: #ffff;
-  padding: 1rem 2rem;
+  padding: 1.25rem 2rem;
   border-bottom: 2px solid #B3CFD0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 0;
+  height: 80px;
 }
 
 .logo {
@@ -26,7 +31,7 @@
 }
 
 .logo img {
-  height: 50px;
+  height: 64px;
   width: auto;
 }
 
@@ -53,17 +58,105 @@
   color: #B3CFD0;
 }
 
+/* Prevent header navigation links from showing underlines on hover */
+.header .nav a,
+.header .nav a:hover {
+  text-decoration: none;
+}
+
 .main {
-  flex: 1;
   margin: 0 15%;
-  padding: 2rem 0;
+  padding: 1rem 0;
+  min-height: calc(100vh - 80px - 64px);
 }
 
 .footer {
   background-color: #ffff;
-  padding: 2rem;
+  padding: 1rem;
   text-align: center;
   border-top: 1px solid #e0e0e0;
   font-size: 0.9rem;
   color: #666;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Global element styles applied app-wide via this CSS module's :global scope */
+:global(body) {
+  margin: 0;
+  padding: 0;
+  background: var(--background, #ffffff);
+  color: var(--foreground, #171717);
+  font-family: var(--font-albert, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:global(h1) {
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+  color: #1f3840;
+}
+
+:global(h2) {
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+  color: #1f3840;
+}
+
+:global(a) {
+  color: inherit;
+  text-decoration: none;
+}
+
+:global(a:hover) {
+  text-decoration: underline;
+}
+
+:global(button) {
+  font-family: inherit;
+}
+
+:global(input), :global(textarea), :global(select) {
+  font-family: inherit;
+  font-size: 14px;
+}
+
+/* Generic card and list styles for pages without their own module files */
+:global(.card) {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  border: 1px solid #e6efef;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+}
+
+:global(.list) {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+:global(.listItem) {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #f0f6f6;
+}
+
+:global(.button) {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #B3CFD0;
+  background: #B3CFD0;
+  color: white;
+  cursor: pointer;
+}
+
+:global(.muted) {
+  color: #7d8b8d;
 }
