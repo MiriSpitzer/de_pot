@@ -98,7 +98,14 @@ export async function updateMemberInfo(id: ObjectId, name: string, email: string
 }
 
 export async function deleteMember(member: Member){
-    const deletedMember = await membersCollection.deleteOne(member);
+    const rawId = member._id as ObjectId | string | undefined;
+    const id = rawId ? typeof rawId === "string" ? new ObjectId(rawId) : rawId : null;
+
+    if (!id) {
+        throw new Error("Member ID is missing");
+    }
+
+    const deletedMember = await membersCollection.deleteOne({ _id: id });
     return deletedMember;
 }
 

@@ -63,9 +63,11 @@ export async function updateMemberInfoAction(
 }
 
 export async function deleteMemberAction(member: Member){
-    const deletedMember = await deleteMember(member);
-    
-    redirect('/overview')
+    if (!member._id) {
+        throw new Error("Member ID is missing");
+    }
 
+    await deleteMember(member);
+    redirect('/overview');
 }
 
