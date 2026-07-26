@@ -7,6 +7,7 @@ import jwt from 'jsonwebtoken';
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { getLoggedInGroup } from "@/lib/validation";
+import { sendLowBalanceEmail, sendNewExpenseEmail } from "@/lib/mails";
 
 
 export async function addExpenseAction(
@@ -17,6 +18,7 @@ export async function addExpenseAction(
   const amount : number = Number(formData.get("amount"));
   const participatingMembersId = formData.getAll("participatingMembers") as string[];
   const individualExpense: number = Number(formData.get("individualExpense"));
+  const group = await getLoggedInGroup();
 
   const errors: any = {};
 
@@ -46,6 +48,15 @@ export async function addExpenseAction(
 
   for(const member of participatingMembers){
     await addExpenseToMember(member._id!, description, individualExpense);
+    const updatedMember = await getMemberById(member._id!);
+    const currentBalance = updatedMember?.balance ?? member.balance;
+
+    if(group){
+      await sendNewExpenseEmail(member.email, member.name, group.name, description, amount, individualExpense, currentBalance)
+      if(currentBalance < 5 ){
+        await sendLowBalanceEmail(member.email, member.name, group.name, currentBalance)
+      }
+    }
   }
 
   if(participatingMembers.length * individualExpense < amount){
@@ -54,7 +65,6 @@ export async function addExpenseAction(
     await addExpenseToMember(participatingMembers[r]._id!, "correctie", correction);
   }
 
-  const group = await getLoggedInGroup();
   if (group) {
     await updateGroupBalance(group.email, -amount);
   }

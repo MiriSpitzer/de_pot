@@ -1,7 +1,6 @@
 import clientPromise from "./mongodb";
 import { ObjectId } from "mongodb";
-import { Donation, Expense, Group, Member } from "@/types";
-import bcrypt from 'bcrypt';
+import { Expense, Group, Member } from "@/types";
 
 const client = await clientPromise;
 const db = await client.db("depot");
@@ -117,4 +116,3 @@ export async function addGroup(group : Group) {
 export async function addExpense(expense: Expense){
     const addedExpense = await expensesCollection.insertOne(expense);
 }
-

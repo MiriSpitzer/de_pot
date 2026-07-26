@@ -7,6 +7,8 @@ import jwt from "jsonwebtoken";
 import { redirect } from "next/navigation";
 import { updateMemberInfo } from "@/lib/dbFunctions";
 import { Member } from "@/types";
+import { getLoggedInGroup } from "@/lib/validation";
+import { sendNewMemberEmail } from "@/lib/mails";
 
 
 export async function createMemberAction(
@@ -15,15 +17,7 @@ export async function createMemberAction(
 ) {
     const name = formData.get("name") as string;
     const email = formData.get("email") as string;
-    const cookieStore = await cookies();
-    const cookie = cookieStore.get("jwt");
-    const groupInfo = cookie?.value;
-    let groupId;
-
-    if (groupInfo) {
-    const decoded = jwt.verify(groupInfo, process.env.JWT_SECRET!) as { id: string; email: string; name: string; balance: number };;
-    groupId = decoded.id;
-    }
+    const group = await getLoggedInGroup();
 
     const errors: any = {};
 
@@ -45,8 +39,9 @@ export async function createMemberAction(
     balance: 0,
     expenses: [],
     donations: [],
-    groupId: new ObjectId(groupId),
+    groupId: new ObjectId(group?._id),
   });
+  await sendNewMemberEmail(email, name, group?.name || "de pot");
 
   redirect(`/overview`);
 
@@ -70,4 +65,3 @@ export async function deleteMemberAction(member: Member){
     await deleteMember(member);
     redirect('/overview');
 }
-
